@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using MyAddressBookPlus.Models;
+using Dapper;
 
 namespace MyAddressBookPlus.Data
 {
@@ -19,42 +20,37 @@ namespace MyAddressBookPlus.Data
 
         public int AddContact(Contact contact)
         {
-            //var sql = "INSERT INTO dbo.[Contact] ([Name] ,[Email] ,[Phone] ,[Address] ,[PictureName]) VALUES" +
-            //    "(@Name, @Email, @Phone, @Address, @Picturename); " +
-            //    "SELECT CAST(SCOPE_IDENTITY() AS INT)";
-            //var id = this.db.Query<int>(sql, contact).Single();
-            //contact.Id = id;
-            //return id;
-            throw new System.Exception();
+            var sql = "INSERT INTO dbo.[Contact] ([Name] ,[Email] ,[Phone] ,[Address] ,[PictureName]) VALUES" +
+                "(@Name, @Email, @Phone, @Address, @Picturename); " +
+                "SELECT CAST(SCOPE_IDENTITY() AS INT)";
+            var id = this.db.Query<int>(sql, contact).Single();
+            contact.Id = id;
+            return id;
         }
 
         public bool DeleteContact(int id)
         {
-            //var sql = "DELETE FROM dbo.[Contact] WHERE id = @id";
-            ////var result = db.Execute(sql, new { Id = id });
+            var sql = "DELETE FROM dbo.[Contact] WHERE id = @id";
+            //var result = db.Execute(sql, new { Id = id });
 
-            //return true;
-
-            throw new System.Exception();
+            return true;            
         }
 
         public Contact GetContact(int id)
         {
-            //var sql = "SELECT * FROM dbo.[Contact] WHERE id = @id";
-            //var result = db.Query<Contact>(sql, new { Id = id })
-            //    .SingleOrDefault();
+            var sql = "SELECT * FROM dbo.[Contact] WHERE id = @id";
+            var result = db.Query<Contact>(sql, new { Id = id })
+                .SingleOrDefault();
 
-            //return result;
-            throw new System.Exception();
+            return result;
         }
 
         public List<Contact> GetContacts()
         {
-            //var sql = "SELECT * FROM dbo.[Contact] order by id";
-            //var result = db.Query<Contact>(sql).ToList();
+            var sql = "SELECT * FROM dbo.[Contact] order by id";
+            var result = db.Query<Contact>(sql).ToList();
 
-            //return result;
-            throw new System.Exception();
+            return result;
         }
     }
 }
