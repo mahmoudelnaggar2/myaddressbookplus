@@ -17,16 +17,17 @@ namespace MyAddressBookPlus
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
-            //var kv = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(KeyVaultService.GetToken));
-            //var sec = kv.GetSecretAsync(WebConfigurationManager.AppSettings["CacheConnectionSecretUri"]).Result;
-            //KeyVaultService.CacheConnection = sec.Value;
+            ///* using AD app registration principle
+            var kv = new KeyVaultClient(new KeyVaultClient.AuthenticationCallback(KeyVaultService.GetToken));
+            var sec = kv.GetSecretAsync(WebConfigurationManager.AppSettings["CacheConnectionSecretUri"]).Result;
+            KeyVaultService.CacheConnection = sec.Value;
 
-            ///* The next four lines of code show you how to use AppAuthentication library to fetch secrets from your key vault */
-            AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider();
-            KeyVaultClient keyVaultClient = new KeyVaultClient
-                (new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
-            var secret = keyVaultClient.GetSecretAsync(WebConfigurationManager.AppSettings["CacheConnectionSecretUri"]).Result;
-            KeyVaultService.CacheConnection = secret.Value;
+            /////* Using Manage System Identity            
+            ////AzureServiceTokenProvider azureServiceTokenProvider = new AzureServiceTokenProvider();
+            ////KeyVaultClient keyVaultClient = new KeyVaultClient
+            ////    (new KeyVaultClient.AuthenticationCallback(azureServiceTokenProvider.KeyVaultTokenCallback));
+            ////var secret = keyVaultClient.GetSecretAsync(WebConfigurationManager.AppSettings["CacheConnectionSecretUri"]).Result;
+            ////KeyVaultService.CacheConnection = secret.Value;
         }
-    }
+}
 }
