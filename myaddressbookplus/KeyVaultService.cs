@@ -12,21 +12,21 @@ namespace MyAddressBookPlus
 
         public static async Task<string> GetToken(string authority, string resource, string scope)
         {
-            //var authContext = new AuthenticationContext(authority);
-            //ClientCredential clientCred = new ClientCredential(WebConfigurationManager.AppSettings["ClientId"],
-            //            WebConfigurationManager.AppSettings["ClientSecret"]);
-            //AuthenticationResult result = await authContext.AcquireTokenAsync(resource, clientCred);
+            var authContext = new AuthenticationContext(authority);
+            ClientCredential clientCred = new ClientCredential(WebConfigurationManager.AppSettings["ClientId"],
+                        WebConfigurationManager.AppSettings["ClientSecret"]);
+            AuthenticationResult result = await authContext.AcquireTokenAsync(resource, clientCred);
 
-            //if (result == null)
-            //    throw new InvalidOperationException("Failed to obtain the JWT token");
+            if (result == null)
+                throw new InvalidOperationException("Failed to obtain the JWT token");
 
 
 
-            //return result.AccessToken;
+            return result.AccessToken;
 
-            var azureServiceTokenProvider = new AzureServiceTokenProvider();
-            string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync("https://vault.azure.net");
-            return accessToken;
+            //var azureServiceTokenProvider = new AzureServiceTokenProvider();
+            //string accessToken = await azureServiceTokenProvider.GetAccessTokenAsync("https://vault.azure.net");
+            //return accessToken;
         }
     }
 }
